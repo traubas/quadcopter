@@ -1,0 +1,103 @@
+<html>
+<head>
+	<link rel="stylesheet" href="styles.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			var modal = document.getElementById('myModal');
+			setInterval(function() { 
+			   $.post("http://mainzero.local:5000/", function() {
+
+			   })
+			   .done(function(){
+			   	$("#first_pi").css("color","green");
+			   	$("#first_pi").text("online.");
+			   })
+			   .fail(function(){
+			   	$("#first_pi").css("color","red");
+			   	$("#first_pi").text("offline.");
+			   });
+
+			   $.post("http://zero2.local:5000/", function() {
+
+			   })
+			   .done(function(){
+			   	$("#second_pi").css("color","green");
+			   	$("#second_pi").text("online.");
+			   })
+			   .fail(function(){
+			   	$("#second_pi").css("color","red");
+			   	$("#second_pi").text("offline.");
+			   });
+
+			   $.post("http://mainzero.local:5000/test_connection", function() {
+
+			   })
+			   .done(function(data){
+			   	if (data == "exist") {
+			   		$("#comm_1").css("color","green");
+					$("#comm_1").text("exist.");
+			   	}
+			   	else {
+			   		$("#comm_1").css("color","red");
+			   		$("#comm_1").text("none.");
+			   	}
+
+			   })
+			   .fail(function(){
+			   		$("#comm_1").css("color","red");
+			   		$("#comm_1").text("no communication with main pi.");
+			   });
+			}, 2000);
+			
+
+	// When the user clicks anywhere outside of the modal, close it
+			window.onclick = function(event) {
+			    if (event.target == modal) {
+			        $(".modal").remove();
+			    }
+			}
+
+		});
+	</script>
+</head>
+<body>
+	<div class="logo">
+	  <div id="header">Control Panel<br>Page</a>
+	</div>
+	<div id="information_div">
+		<center>
+			<div id="onlinePi">
+				Status of raspberry pi's:
+				<br></br>
+				<div id="quadcopter1">
+					quadcopter1:
+					<p><span>&nbsp;&nbsp;&nbsp;&nbsp;mainzero: </span><span id="first_pi"></span></p>
+					<p><span>&nbsp;&nbsp;&nbsp;&nbsp;zero2: </span><span id="second_pi"></span></p>
+					<p><span>&nbsp;&nbsp;&nbsp;&nbsp;communication between them: </span><span id="comm_1"></span></p>
+				</div>
+			</div>
+			
+		</center>
+	</div>
+	<div id="newtest">
+		<div class="camera">
+			<h1>Camera 1</h1>
+			<iframe class="first_camera" src="http://192.168.43.180:5000/video_feed"></iframe>
+		</div>
+		<div class="camera">
+			<h1>Camera 2</h1>
+			<iframe class="second_camera" src="http://192.168.43.32:5000/video_feed"></iframe>
+		</div>
+	</div>
+	
+
+	<!--<div id="myModal" class="modal">
+
+		  <div class="modal-content">
+		    <span class="close">&times;</span>
+		    <p id="feedback_content"><iframe class="themovie" src=main.html></iframe></p>
+		    	
+		  </div>-->
+</body>
+</html>
